@@ -1,0 +1,25 @@
+{% comment %} <h2>Upload Song</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+</form> {% endcomment %}
+<a href="{% url 'music:song_list' %}">song list</a>
+
+<h2>Upload Song</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% comment %} <label for="id_visibility">Visibility:</label>
+    <select name="visibility" id="id_visibility">
+      <option value="public">Public</option>
+      <option value="private">Private</option>
+      <option value="protected">Protected</option>
+    </select>
+    <br>
+    <label for="id_authorized_emails">Authorized Emails (comma-separated):</label>
+    <input type="text" name="authorized_emails" id="id_authorized_emails">
+    <br> {% endcomment %}
+    <button type="submit">Upload Song</button>
+  </form>
+  

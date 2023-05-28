@@ -1,0 +1,45 @@
+{% comment %} <h2>Song List</h2>
+<ul>
+{% for song in songs %}
+    <div>
+        <li>{{ song.title }} - {{ song.artist }}  -    {{song.audio_file}} </li>
+    </div>
+    {% comment %} <audio controls>
+        <source src="/home/dev/Desktop/musicshare/media/{{song.audio_file}}" />
+    </audio>
+    <a href="/home/dev/Desktop/musicshare/media/{{song.audio_file}}" download> {% endcomment %}
+{% comment %} {% empty %}
+    <li>No songs available.</li>
+{% endfor %}
+</ul> {% endcomment %} 
+<!-- song_list.html -->
+<a href="{% url 'music:upload_song' %}">file upload</a>
+
+<h2>Song List</h2>
+<ul>
+    {% for song in songs %}
+        <li>
+            <div>
+                <strong>Title:</strong> {{ song.title }}<br>
+                <strong>Artist:</strong> {{ song.artist }}<br>
+                
+                {% if song.visibility == 'public' %}
+                <strong>Audio File:</strong> <audio controls src="{{ song.audio_file.url }}"></audio><br>
+                    <strong>Download:</strong> <a href="{{ song.audio_file.url }}" download>Download</a>
+                {% elif song.visibility == 'protected' %}
+                    {% if song.authorized_emails != None %}
+                        <strong>Audio File:</strong> <audio controls src="{{ song.audio_file.url }}"></audio><br>
+                        <strong>Download:</strong> <a href="{{ song.audio_file.url }}" download>Download</a>
+                    {% else %}
+                        <em>Access Denied</em>
+                    {% endif %}
+                {% elif song.visibility == 'private' %}
+                    <em>Private Song</em>
+                {% endif %}
+            </div>
+        </li>
+    {% empty %}
+        <li>No songs available.</li>
+    {% endfor %}
+    
+</ul>
